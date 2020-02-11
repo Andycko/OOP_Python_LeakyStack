@@ -28,19 +28,20 @@ class MyLeakyStack():
     def push(self, item):
         if self._stackItems == self._maxlen:
             # Full exception
-            if self._top % self._capacity == 0:
+            if self._top == 0:
                 self._top = 1
-            if self._top == 2:
-                self._end = 0
-            self._storage.remove(self._storage[self._end % self._capacity])
-            self._storage.insert(self._top % self._capacity,item)
-            self._top += 1
-            self._end += 1
-            if self._top != 1: 
+            #if self._top == 2:
+            #    self._end = 0
+            self._storage.remove(self._storage[self._end])
+            self._storage.insert(self._top,item)
+            self._top = ((self._top + 1) % self._capacity) 
+            self._end = ((self._end + 1) % self._capacity)
+            if self._top != 2: 
                 self._storage = self._storage[-1:] + self._storage[:-1]
-            print(str(self._storage), self._end, self._top)
+#            print(str(self._storage), self._end, self._top)
 
         else:
+            self._top = self._top % self._capacity
             if self._storage[self._top] == None:
                 self._storage.insert(self._top, item)
                 self._top = 1
@@ -54,36 +55,33 @@ class MyLeakyStack():
                 self._storage.pop((self._top + 1) % self._capacity)
 
             self._stackItems += 1
-            print(str(self._storage))
+#            print(str(self._storage))
 
     def pop(self):
         if self._stackItems == 1 and self._top == 1:
-            self._storage.pop(0)
+            poppedItem = self._storage.pop(0)
         else:
-            self._storage.pop(self._top % self._capacity)
+            poppedItem = self._storage.pop(self._top % self._capacity)
         self._storage.insert(self._top % self._capacity, None)
         self._top -= 1
         self._stackItems -= 1
-        print(str(self._storage))
+        return poppedItem
+#        print(str(self._storage))
 
     def __str__(self):
         return str(self._storage)
 
+""" if __name__ == "__main__":
+    S = MyLeakyStack(3, 5)
 
-S = MyLeakyStack(3, 5)
+    for x in range(1,9):
+        S.push(x)
 
-for x in range(1,9):
-    S.push(x)
+ """
 
-
-
-
-"""
 if __name__ == '__main__':
 
     S = MyLeakyStack(5, 10)   # stack size should be 5 and the capacity of the array should be 10
-
-    S.push(1)
 
     for i in range(12):
         try:
@@ -105,6 +103,3 @@ if __name__ == '__main__':
             print("after push " + str(i+100), S._storage)
         except Exception as e:
             print(e, S._storage)
- """
-
-
