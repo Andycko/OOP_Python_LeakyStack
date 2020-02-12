@@ -1,4 +1,5 @@
-#  Author: CS1527 Course Team
+#  Author of the initial template: CS1527 Course Team
+#  Further changes to complete assessment mady by: Andrej Szalma
 #  Date: 9 January 2020
 #  Assessment 1:  10% of your overall mark for the course
 #
@@ -59,8 +60,7 @@ class MyLeakyStack(ArrayStack):
         self._stackItems -= 1
         return self._removedItem
 
-    """ Just overwriting functions from parent ArrayStack class, as my Stack works a bit differently """"    
-        
+    # Just overwriting functions from parent ArrayStack class, as my Stack works a bit differently 
     def top(self):
         if self.is_empty():
             raise Empty('Stack is empty')
